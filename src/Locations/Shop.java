@@ -14,7 +14,7 @@ public class Shop extends Location{
     public boolean isInShop=false;
 
     public Shop(int ID, String Name) {
-        super(ID,Name);
+        super(ID,Name,null);
 		this.ID=ID;
         this.Name=Name;
         
@@ -29,6 +29,7 @@ public class Shop extends Location{
     @Override
     public void InAction() {
         ListShopItems();
+        
     }
 
     LineStringCreaters LineCreater =new LineStringCreaters();
@@ -36,10 +37,12 @@ public class Shop extends Location{
         System.out.print("\033[H\033[2J");
         System.out.flush();
         isInShop=true;
-        System.out.println(LineCreater.CreateLine(5, "=", false)+"Shop"+LineCreater.CreateLine(5, "=", false));
+        System.out.println(LineCreater.CreateLine(20, "=", false)+"Shop"+LineCreater.CreateLine(20, "=", false));
         System.out.println("[Caution]> Buying new item,removes old item");
         ListWeapons();
         ListArmors();
+        LineCreater.CreateLine(44, "=", true);
+        System.out.println("[EXIT  ]> ID: 0");
     }
     public void ListWeapons(){
         System.out.println(LineCreater.CreateLine(3, "-", false)+"Weapons");

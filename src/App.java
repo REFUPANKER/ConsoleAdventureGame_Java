@@ -5,6 +5,7 @@ import Locations.Location;
 import Locations.Shop;
 import Managers.LineStringCreaters;
 import Managers.ShortOutputCommands;
+import Monsters.Monster;
 
 public class App extends ShortOutputCommands {
     static boolean isStarted = false;
@@ -40,8 +41,9 @@ public class App extends ShortOutputCommands {
     }
 
     static Scanner scanner = new Scanner(System.in);
+
     static void Start() {
-        
+
         while (StatusController.startsWith("exit") == false) {
             StatusController = scanner.nextLine();
             if (StatusController.startsWith("exit")) {
@@ -72,7 +74,7 @@ public class App extends ShortOutputCommands {
                         TaskPrintLn("Character Selected", Player.Name);
                         cwl("Press Enter to continue");
                     }
-                }else  if (Player == null) {
+                } else if (Player == null) {
                     ListCharacters();
                 } else {
                     if (Player.isFighting == false) {
@@ -100,6 +102,17 @@ public class App extends ShortOutputCommands {
                     }
                 }
             }
+        } else {
+            if (StatusController.startsWith("0")) {
+                CurrentLocation = null;
+                ListLocations();
+            } else if (StatusController.startsWith("1")) {
+                if (CurrentLocation.LocalMonsters.size() > 0) {
+                    CurrentLocation.AttackToMonster();
+                }
+            } else if (CurrentLocation.LocalMonsters.size() <= 0) {
+                ListLocations();
+            }
         }
     }
 
@@ -111,11 +124,11 @@ public class App extends ShortOutputCommands {
         System.out.print("\033[H\033[2J");
         System.out.flush();
         TaskPrintLn("Select", "Character");
-        cwl(LineCreater.CreateLine(5, "=", false) + "Characters" + LineCreater.CreateLine(5, "=", false));
-        TaskPrintLn("ID: 1", "Samurai"+" |Health: 21"+" |Damage: 5"+" |Money: 15");
-        TaskPrintLn("ID: 2", "Archer "+" |Health: 18"+" |Damage: 7"+" |Money: 20");
-        TaskPrintLn("ID: 3", "Knight "+" |Health: 24"+" |Damage: 8"+" |Money: 5");
-        cwl(LineCreater.CreateLine(10 + "Characters".length(), "=", false));
+        cwl(LineCreater.CreateLine(20, "=", false) + "Characters" + LineCreater.CreateLine(20, "=", false));
+        TaskPrintLn("ID: 1", "Samurai" + " |Health: 21" + " |Damage: 5" + " |Money: 15");
+        TaskPrintLn("ID: 2", "Archer " + " |Health: 18" + " |Damage: 7" + " |Money: 20");
+        TaskPrintLn("ID: 3", "Knight " + " |Health: 24" + " |Damage: 8" + " |Money: 5");
+        cwl(LineCreater.CreateLine(40 + "Characters".length(), "=", false));
     }
 
     static void ListLocations() {
@@ -129,10 +142,10 @@ public class App extends ShortOutputCommands {
     }
 
     static void AddLocations() {
-        pLocations.add(new Location(1, "SafeHouse"));
-        pLocations.add(new Location(2, "Cave"));
-        pLocations.add(new Location(3, "Forest"));
-        pLocations.add(new Location(4, "River"));
+        pLocations.add(new Location(1, "SafeHouse", null));
+        pLocations.add(new Location(2, "Cave", new Monster(1, "Zombie", 4, 3, 10)));
+        pLocations.add(new Location(3, "Forest", new Monster(2, "Vampire", 7, 4, 14)));
+        pLocations.add(new Location(4, "River", new Monster(3, "Bear", 12, 7, 20)));
         pShop = new Shop(5, "Shop");
         pLocations.add(pShop);
     }

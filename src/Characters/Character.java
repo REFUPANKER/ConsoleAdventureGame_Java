@@ -69,4 +69,7 @@ public class Character {
         System.out.println("|Money\t:"+Money);
         LineCreater.CreateLine(15+Name.length(),"=",true);
     }
+    public Armor GetArmor(){
+        return (this.armor==null)?null:this.armor;
+    }
 }
