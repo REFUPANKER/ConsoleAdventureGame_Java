@@ -61,7 +61,6 @@ public class Location {
         }else{
             Player.Money+=MonsterType.Money;
             System.out.println("You Killed All Monsters And Earn "+MonsterType.Money+" Money");
-            System.out.println("");
         }
     }
     void CheckMonsters()
